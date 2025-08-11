@@ -66,9 +66,9 @@ def main():
         print(f"Error: {json_res['errors']}")
     else:
         json_res = json.loads(res.text)
-        ticket_link = json_res['self']
+        ticket_key = json_res['key']
         # Display link to ticket in terminal after creation
-        print(f"Link: {ticket_link}")
+        print(f"Link: {BASE_URL}/browse/{ticket_key}")
 
 
 # Create the description text as Atlassian Document Format (ADF) with WYSIWYG styles
@@ -338,6 +338,7 @@ def create_ticket(summary, project, description, issue_type, priority):
     issue['fields']['issuetype'] = {'name': issue_type}
     issue['fields']['project'] = {'key': project}
     issue['fields']['description'] = description
+    issue['fields']['labels'] = ['placeholder']
     issue['fields']['priority'] = {'name': priority}
 
     # Create ticket in Jira backlog
